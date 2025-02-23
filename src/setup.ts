@@ -35,8 +35,8 @@ async function setup() {
   const config = {
     mcpServers: {
       "harvest-server": {
-        command: "npx",
-        args: ["harvest-mcp-server"],
+        command: "node",
+        args: [path.join(process.cwd(), "build/index.js")],
         env: {
           HARVEST_ACCESS_TOKEN: token,
           HARVEST_ACCOUNT_ID: accountId,

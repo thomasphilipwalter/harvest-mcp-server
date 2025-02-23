@@ -20,78 +20,47 @@ An MCP server that lets you log Harvest time entries using natural language, inc
 
 ## Installation
 
-### Quick Install (Recommended)
+### Installation
 
 1. Install the [Claude desktop app](https://claude.ai/desktop)
 
-2. Open Terminal and run:
-```bash
-npx harvest-mcp-server setup
-```
-
-3. Follow the prompts to enter your:
-   - Harvest Personal Access Token (from https://id.getharvest.com/developers)
-   - Harvest Account ID
-   - Standard work day hours (default: 7.5)
-   - Timezone (default: Australia/Perth)
-
-4. Restart Claude desktop app
-
-That's it! You can now use natural language time tracking in Claude.
-
-### Manual Installation (For Developers)
-
-If you prefer to work with the source code directly:
-
-1. Clone this repository:
+2. Clone this repository:
 ```bash
 git clone https://github.com/adrian-dotco/harvest-mcp-server.git
 cd harvest-mcp-server
 ```
 
-2. Install dependencies and build:
+3. Install dependencies and build:
 ```bash
 npm install
 npm run build
 ```
 
-3. Configure Claude settings manually:
-   - VSCode: `~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
-   - Claude desktop: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-Add this configuration:
-```json
-{
-  "mcpServers": {
-    "harvest": {
-      "command": "node",
-      "args": ["/path/to/harvest-server/build/index.js"],
-      "env": {
-        "HARVEST_ACCESS_TOKEN": "your-token",
-        "HARVEST_ACCOUNT_ID": "your-account-id",
-        "STANDARD_WORK_DAY_HOURS": "7.5",
-        "TIMEZONE": "Australia/Perth"
-      },
-      "disabled": false,
-      "autoApprove": []
-    }
-  }
-}
+4. Run the setup script:
+```bash
+node build/setup.js
 ```
+
+5. Follow the prompts to enter your:
+   - Harvest Personal Access Token (from https://id.getharvest.com/developers)
+   - Harvest Account ID
+   - Standard work day hours (default: 7.5)
+   - Timezone (default: Australia/Perth)
+
+6. Restart Claude desktop app
+
+That's it! You can now use natural language time tracking in Claude.
 
 ### Staying Updated
 
-For npm installation:
-```bash
-npx harvest-mcp-server update
-```
-
-For manual installation:
+To update to the latest version:
 ```bash
 git pull
 npm install
 npm run build
 ```
+
+The setup script will have configured Claude to use your local build of the server, so any updates you pull will be automatically available after rebuilding.
 
 ## Usage
 
