@@ -78,7 +78,49 @@ Leave requests (automatically uses standard work day hours):
 ```
 "I'm off sick today"
 "I'm unwell today"
+"Taking annual leave next week"
 ```
+
+### get_time_report
+Get time reports using natural language queries. Examples:
+
+1. Time Period Options:
+```
+"Show time report for last month"
+"Get time summary for this week"
+"Show hours from January 1st to January 31st"
+"Report time for Q1"
+"Show me yesterday's hours"
+```
+
+2. Report Types:
+- By Project (default):
+  ```
+  "Show time report for last month"
+  "Get project hours for this week"
+  ```
+- By Client:
+  ```
+  "Show time report by client for this month"
+  "Get hours by client for Q1"
+  ```
+- By Task:
+  ```
+  "Show time summary by task for January"
+  "Get task breakdown for last week"
+  ```
+- By Team Member:
+  ```
+  "Show team hours for last week"
+  "Get time report by user for this month"
+  ```
+
+3. Report Details:
+Each report includes:
+- Total hours worked
+- Billable vs non-billable hours
+- Billable amounts (if you have permission)
+- Project/client/task/user details based on report type
 
 ### list_projects
 List all available Harvest projects:
