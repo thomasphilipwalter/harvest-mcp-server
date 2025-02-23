@@ -1,17 +1,17 @@
 {
-  "name": "harvest-server",
+  "name": "@harvest-mcp/server",
   "version": "0.1.0",
-  "description": "AN MCP Server for interacting with Harvest",
-  "private": true,
+  "description": "Natural language time tracking with Harvest",
   "type": "module",
   "bin": {
-    "harvest-server": "./build/index.js"
+    "harvest-mcp-server": "./build/index.js",
+    "harvest-mcp-setup": "./build/setup.js"
   },
   "files": [
     "build"
   ],
   "scripts": {
-    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\" && node -e \"require('fs').chmodSync('build/setup.js', '755')\"",
     "prepare": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js"
@@ -24,5 +24,25 @@
   "devDependencies": {
     "@types/node": "^20.11.24",
     "typescript": "^5.3.3"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "harvest",
+    "time-tracking",
+    "mcp",
+    "claude",
+    "natural-language"
+  ],
+  "author": "Adrian",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrian-dotco/harvest-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adrian-dotco/harvest-mcp-server/issues"
+  },
+  "homepage": "https://github.com/adrian-dotco/harvest-mcp-server#readme"
 }

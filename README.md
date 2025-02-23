@@ -20,25 +20,46 @@ An MCP server that lets you log Harvest time entries using natural language, inc
 
 ## Installation
 
+### Quick Install (Recommended)
+
+1. Install the [Claude desktop app](https://claude.ai/desktop)
+
+2. Open Terminal and run:
+```bash
+npx @harvest-mcp/server setup
+```
+
+3. Follow the prompts to enter your:
+   - Harvest Personal Access Token (from https://id.getharvest.com/developers)
+   - Harvest Account ID
+   - Standard work day hours (default: 7.5)
+   - Timezone (default: Australia/Perth)
+
+4. Restart Claude desktop app
+
+That's it! You can now use natural language time tracking in Claude.
+
+### Manual Installation (For Developers)
+
+If you prefer to work with the source code directly:
+
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/harvest-mcp-server.git
+git clone https://github.com/adrian-dotco/harvest-mcp-server.git
 cd harvest-mcp-server
 ```
 
-2. Install dependencies:
+2. Install dependencies and build:
 ```bash
 npm install
-```
-
-3. Build the server:
-```bash
 npm run build
 ```
 
-4. Configure in your Claude settings file:
+3. Configure Claude settings manually:
+   - VSCode: `~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+   - Claude desktop: `~/Library/Application Support/Claude/claude_desktop_config.json`
 
-For VSCode (`~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`):
+Add this configuration:
 ```json
 {
   "mcpServers": {
@@ -58,7 +79,19 @@ For VSCode (`~/Library/Application Support/Code/User/globalStorage/saoudrizwan.c
 }
 ```
 
-For Claude desktop app (`~/Library/Application Support/Claude/claude_desktop_config.json`), use the same configuration.
+### Staying Updated
+
+For npm installation:
+```bash
+npx @harvest-mcp/server update
+```
+
+For manual installation:
+```bash
+git pull
+npm install
+npm run build
+```
 
 ## Usage
 
