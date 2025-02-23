@@ -19,7 +19,7 @@ To set up your authorization variables:
 1. Click the ellipsis (...) next to the collection's name
 2. Select "Edit" from the dropdown
 3. From the "Variables" tab, replace the values for:
-   - HARVEST_ACCOUNT_ID 
+   - HARVEST_ACCOUNT_ID
    - Bearer ACCESS_TOKEN
 4. Click "Update" at the bottom
 

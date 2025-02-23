@@ -61,10 +61,10 @@ page  integer The page number to use in pagination. For instance, if you make a 
 per_page  integer The number of records to return per page. Can range between 1 and 2000. (Default: 2000)
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries" \
+curl "<https://api.harvestapp.com/v2/time_entries>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)"
+  -H "User-Agent: MyApp (<yourname@example.com>)"
 Example Response:
 
 {
@@ -315,10 +315,10 @@ Example Response:
   "previous_page":null,
   "page":1,
   "links":{
-    "first":"https://api.harvestapp.com/v2/time_entries?page=1&per_page=2000",
+    "first":"<https://api.harvestapp.com/v2/time_entries?page=1&per_page=2000>",
     "next":null,
     "previous":null,
-    "last":"https://api.harvestapp.com/v2/time_entries?page=1&per_page=2000"
+    "last":"<https://api.harvestapp.com/v2/time_entries?page=1&per_page=2000>"
   }
 }
 Retrieve a time entry⚭
@@ -328,10 +328,10 @@ Retrieves the time entry with the given ID. Returns a time entry object and a 20
 GET /v2/time_entries/{TIME_ENTRY_ID}
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries/636708723" \
+curl "<https://api.harvestapp.com/v2/time_entries/636708723>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)"
+  -H "User-Agent: MyApp (<yourname@example.com>)"
 Example Response:
 
 {
@@ -412,10 +412,10 @@ notes string  optional  Any notes to be associated with the time entry.
 external_reference  object  optional  An object containing the id, group_id, account_id, and permalink of the external reference.
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries" \
+curl "<https://api.harvestapp.com/v2/time_entries>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"user_id":1782959,"project_id":14307913,"task_id":8083365,"spent_date":"2017-03-21","hours":1.0}'
@@ -496,10 +496,10 @@ notes string  optional  Any notes to be associated with the time entry.
 external_reference  object  optional  An object containing the id, group_id, account_id, and permalink of the external reference.
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries" \
+curl "<https://api.harvestapp.com/v2/time_entries>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X POST \
   -H "Content-Type: application/json" \
   -d '{"user_id":1782959,"project_id":14307913,"task_id":8083365,"spent_date":"2017-03-21","started_time":"8:00am","ended_time":"9:00am"}'
@@ -579,10 +579,10 @@ notes string  Any notes to be associated with the time entry.
 external_reference  object  An object containing the id, group_id, account_id, and permalink of the external reference.
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries/636718192" \
+curl "<https://api.harvestapp.com/v2/time_entries/636718192>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X PATCH \
   -H "Content-Type: application/json" \
   -d '{"notes":"Updated notes"}'
@@ -654,10 +654,10 @@ DELETE /v2/time_entries/{TIME_ENTRY_ID}/external_reference
 Example Request:
 
 curl
-"https://api.harvestapp.com/v2/time_entries/636718192/external_reference" \
+"<https://api.harvestapp.com/v2/time_entries/636718192/external_reference>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X DELETE
 Delete a time entry⚭
 
@@ -666,10 +666,10 @@ Delete a time entry. Deleting a time entry is only possible if it’s not closed
 DELETE /v2/time_entries/{TIME_ENTRY_ID}
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries/636718192" \
+curl "<https://api.harvestapp.com/v2/time_entries/636718192>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X DELETE
 Restart a stopped time entry⚭
 
@@ -678,10 +678,10 @@ Restarting a time entry is only possible if it isn’t currently running. Return
 PATCH /v2/time_entries/{TIME_ENTRY_ID}/restart
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries/662202797/restart" \
+curl "<https://api.harvestapp.com/v2/time_entries/662202797/restart>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X PATCH
 Example Response:
 
@@ -750,10 +750,10 @@ Stopping a time entry is only possible if it’s currently running. Returns a 20
 PATCH /v2/time_entries/{TIME_ENTRY_ID}/stop
 Example Request:
 
-curl "https://api.harvestapp.com/v2/time_entries/662202797/stop" \
+curl "<https://api.harvestapp.com/v2/time_entries/662202797/stop>" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Harvest-Account-Id: $ACCOUNT_ID" \
-  -H "User-Agent: MyApp (yourname@example.com)" \
+  -H "User-Agent: MyApp (<yourname@example.com>)" \
   -X PATCH
 Example Response:
 

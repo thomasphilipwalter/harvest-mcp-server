@@ -9,14 +9,16 @@ Harvest requires applications to authenticate all requests with OAuth2 or Person
 - GET
 - POST
 - PATCH
-- DELETE 
+- DELETE
 
-### Request Headers Required:
+### Request Headers Required
+
 - Authorization: Bearer $ACCESS_TOKEN
 - Harvest-Account-Id: $ACCOUNT_ID
-- User-Agent: MyApp (email@example.com)
+- User-Agent: MyApp (<email@example.com>)
 
-### Parameters:
+### Parameters
+
 - GET requests: Include in URL query string
 - POST/PATCH requests: Include in request body (JSON or form data)
 - For JSON, use Content-Type: application/json header

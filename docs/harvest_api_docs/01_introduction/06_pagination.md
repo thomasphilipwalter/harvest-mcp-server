@@ -1,6 +1,7 @@
 # Pagination
 
 Most requests that return multiple records are paginated. The response includes:
+
 - A `links` section with URLs to retrieve the `first`, `next`, `previous`, and `last` pages
 - Metadata values for `page`, `total_pages`, `total_entries`, `next_page`, and `previous_page`
 
@@ -13,12 +14,14 @@ For cursor-based pagination, `page`, `next_page`, and `previous_page` will be `n
 Paginated endpoints support these optional parameters:
 
 ### per_page
+
 - Controls number of records per page
 - Default and maximum: 2000
 - If not specified, returns maximum records
 - Values larger than maximum return 422 error
 
 ### page or cursor
+
 - Indicates which page of records to return
 - Mutually exclusive - don't use together
 - `cursor` takes precedence if both provided
@@ -27,11 +30,13 @@ Paginated endpoints support these optional parameters:
 ## Example Paginated Response
 
 First page request:
+
 ```
 GET /v2/clients
 ```
 
 Response:
+
 ```json
 {
   "clients": [
@@ -52,11 +57,13 @@ Response:
 ```
 
 Second page request (using `next` URL from links):
+
 ```
 GET /v2/clients?cursor=eyJhZnRlciI6eyJpZCI6MzAwN319&per_page=2000&ref=next_cursor
 ```
 
 Last page response:
+
 ```json
 {
   "clients": [
