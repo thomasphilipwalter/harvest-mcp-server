@@ -25,6 +25,11 @@ const LEAVE_PATTERNS = {
     triggers: ['sick', 'ill', 'unwell'],
     project: '[LV] Leave',
     task: "Person (Sick/Carer's) Leave",
+  },
+  annual: {
+    triggers: ['annual leave', 'vacation', 'holiday', 'time off'],
+    project: '[LV] Leave',
+    task: 'Annual Leave',
   }
 };
 
