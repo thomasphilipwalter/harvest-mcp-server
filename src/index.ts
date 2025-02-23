@@ -10,6 +10,35 @@ import {
 import axios from 'axios';
 import * as chrono from 'chrono-node';
 
+// Time report response types
+interface TimeReportResult {
+  client_id?: number;
+  client_name?: string;
+  project_id?: number;
+  project_name?: string;
+  task_id?: number;
+  task_name?: string;
+  user_id?: number;
+  user_name?: string;
+  weekly_capacity?: number;
+  avatar_url?: string;
+  is_contractor?: boolean;
+  total_hours: number;
+  billable_hours: number;
+  currency: string;
+  billable_amount: number;
+}
+
+interface TimeReportResponse {
+  results: TimeReportResult[];
+  per_page: number;
+  total_pages: number;
+  total_entries: number;
+  next_page: number | null;
+  previous_page: number | null;
+  page: number;
+}
+
 const HARVEST_ACCESS_TOKEN = process.env.HARVEST_ACCESS_TOKEN;
 const HARVEST_ACCOUNT_ID = process.env.HARVEST_ACCOUNT_ID;
 const STANDARD_WORK_DAY_HOURS = parseFloat(process.env.STANDARD_WORK_DAY_HOURS || '7.5');
@@ -76,6 +105,61 @@ class HarvestServer {
       }
     }
     return { isLeave: false };
+  }
+
+  private parseDateRange(text: string): { from: string; to: string } {
+    const lowercaseText = text.toLowerCase();
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: TIMEZONE }));
+    
+    // Handle common time ranges
+    if (lowercaseText.includes('last month')) {
+      const from = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const to = new Date(now.getFullYear(), now.getMonth(), 0);
+      return {
+        from: from.toISOString().split('T')[0],
+        to: to.toISOString().split('T')[0]
+      };
+    }
+    
+    if (lowercaseText.includes('this month')) {
+      const from = new Date(now.getFullYear(), now.getMonth(), 1);
+      const to = now;
+      return {
+        from: from.toISOString().split('T')[0],
+        to: to.toISOString().split('T')[0]
+      };
+    }
+    
+    if (lowercaseText.includes('this week')) {
+      const from = new Date(now);
+      from.setDate(now.getDate() - now.getDay());
+      return {
+        from: from.toISOString().split('T')[0],
+        to: now.toISOString().split('T')[0]
+      };
+    }
+
+    if (lowercaseText.includes('last week')) {
+      const from = new Date(now);
+      from.setDate(now.getDate() - now.getDay() - 7);
+      const to = new Date(from);
+      to.setDate(from.getDate() + 6);
+      return {
+        from: from.toISOString().split('T')[0],
+        to: to.toISOString().split('T')[0]
+      };
+    }
+
+    // Default to parsing with chrono
+    const dates = chrono.parse(text);
+    if (dates.length === 0) {
+      throw new McpError(ErrorCode.InvalidParams, 'Could not parse date range from input');
+    }
+
+    return {
+      from: dates[0].start.date().toISOString().split('T')[0],
+      to: (dates[0].end?.date() || dates[0].start.date()).toISOString().split('T')[0]
+    };
   }
 
   private async parseTimeEntry(text: string) {
@@ -232,6 +316,20 @@ class HarvestServer {
             },
           },
         },
+        {
+          name: 'get_time_report',
+          description: 'Get time reports using natural language',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              text: {
+                type: 'string',
+                description: 'Natural language query (e.g., "Show time report for last month", "Get time summary for Project X")',
+              },
+            },
+            required: ['text'],
+          },
+        },
       ],
     }));
 
@@ -336,6 +434,49 @@ class HarvestServer {
               },
             ],
           };
+        }
+
+        case 'get_time_report': {
+          const { text } = request.params.arguments as { text: string };
+          
+          try {
+            const { from, to } = this.parseDateRange(text);
+            const lowercaseText = text.toLowerCase();
+            
+            let endpoint = '/reports/time/projects'; // default to project report
+            
+            if (lowercaseText.includes('by client') || lowercaseText.includes('for client')) {
+              endpoint = '/reports/time/clients';
+            } else if (lowercaseText.includes('by task') || lowercaseText.includes('tasks')) {
+              endpoint = '/reports/time/tasks';
+            } else if (lowercaseText.includes('by team') || lowercaseText.includes('by user')) {
+              endpoint = '/reports/time/team';
+            }
+            
+            const response = await this.axiosInstance.get<TimeReportResponse>(endpoint, {
+              params: { from, to }
+            });
+
+            return {
+              content: [
+                {
+                  type: 'text',
+                  text: JSON.stringify(response.data, null, 2),
+                },
+              ],
+            };
+          } catch (error) {
+            if (error instanceof McpError) {
+              throw error;
+            }
+            if (axios.isAxiosError(error)) {
+              throw new McpError(
+                ErrorCode.InternalError,
+                `Harvest API error: ${error.response?.data?.message ?? error.message}`
+              );
+            }
+            throw error;
+          }
         }
 
         default:
