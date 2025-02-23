@@ -1,5 +1,5 @@
 {
-  "name": "@harvest-mcp/server",
+  "name": "harvest-mcp-server",
   "version": "0.1.0",
   "description": "Natural language time tracking with Harvest",
   "type": "module",

@@ -36,7 +36,7 @@ async function setup() {
     mcpServers: {
       "harvest-server": {
         command: "npx",
-        args: ["@harvest-mcp/server"],
+        args: ["harvest-mcp-server"],
         env: {
           HARVEST_ACCESS_TOKEN: token,
           HARVEST_ACCOUNT_ID: accountId,

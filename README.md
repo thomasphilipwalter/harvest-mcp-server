@@ -26,7 +26,7 @@ An MCP server that lets you log Harvest time entries using natural language, inc
 
 2. Open Terminal and run:
 ```bash
-npx @harvest-mcp/server setup
+npx harvest-mcp-server setup
 ```
 
 3. Follow the prompts to enter your:
@@ -83,7 +83,7 @@ Add this configuration:
 
 For npm installation:
 ```bash
-npx @harvest-mcp/server update
+npx harvest-mcp-server update
 ```
 
 For manual installation:
