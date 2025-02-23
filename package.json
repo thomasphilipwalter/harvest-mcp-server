@@ -1,11 +1,10 @@
 {
   "name": "harvest-mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Natural language time tracking with Harvest",
   "type": "module",
   "bin": {
-    "harvest-mcp-server": "./build/index.js",
-    "harvest-mcp-setup": "./build/setup.js"
+    "harvest-mcp-server": "./build/setup.js"
   },
   "files": [
     "build"
