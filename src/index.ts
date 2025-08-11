@@ -208,29 +208,29 @@ class HarvestServer {
   }
 
   private async findProject(text: string, isLeave: boolean = false, leaveType?: keyof typeof LEAVE_PATTERNS): Promise<number> {
-    const response = await this.axiosInstance.get('/projects');
-    const projects = response.data.projects;
+    const response = await this.axiosInstance.get('/users/me/project_assignments');
+    const projectAssignments = response.data.project_assignments;
     
     if (isLeave && leaveType) {
       // For leave requests, look for the specific leave project
-      const leaveProject = projects.find((p: { name: string; id: number }) => 
-        p.name === LEAVE_PATTERNS[leaveType].project
+      const leaveProject = projectAssignments.find((pa: { project: { name: string; id: number } }) => 
+        pa.project.name === LEAVE_PATTERNS[leaveType].project
       );
       if (leaveProject) {
-        return leaveProject.id;
+        return leaveProject.project.id;
       }
     }
     
     // For regular entries or if leave project not found
-    const projectMatch = projects.find((p: { name: string; id: number }) => 
-      text.toLowerCase().includes(p.name.toLowerCase())
+    const projectMatch = projectAssignments.find((pa: { project: { name: string; id: number } }) => 
+      text.toLowerCase().includes(pa.project.name.toLowerCase())
     );
 
     if (!projectMatch) {
       throw new McpError(ErrorCode.InvalidParams, 'Could not find matching project');
     }
 
-    return projectMatch.id;
+    return projectMatch.project.id;
   }
 
   private async findTask(projectId: number, text: string, isLeave: boolean = false, leaveType?: keyof typeof LEAVE_PATTERNS): Promise<number> {
@@ -380,16 +380,16 @@ class HarvestServer {
         }
 
         case 'list_projects': {
-          const response = await this.axiosInstance.get('/projects');
+          const response = await this.axiosInstance.get('/users/me/project_assignments');
           return {
             content: [
               {
                 type: 'text',
-                text: JSON.stringify(response.data.projects.map((p: { id: number; name: string; code: string; is_active: boolean }) => ({
-                  id: p.id,
-                  name: p.name,
-                  code: p.code,
-                  is_active: p.is_active,
+                text: JSON.stringify(response.data.project_assignments.map((pa: { project: { id: number; name: string; code: string }; is_active: boolean }) => ({
+                  id: pa.project.id,
+                  name: pa.project.name,
+                  code: pa.project.code,
+                  is_active: pa.is_active,
                 })), null, 2),
               },
             ],
